@@ -1,0 +1,19 @@
+[package]
+name = "hyperlink"
+version = "0.1.0"
+edition = "2021"
+authors = ["Stuart Axon <stu.axon@gmail.com>"]
+description = "Hyperlinks in the terminal with OSC-8."
+
+[dependencies]
+clap = { version = "4.2.7", features = ["derive"] }
+dirs = "5.0.1"
+
+[dev-dependencies]
+rstest = "0.17.0"
+temp-env = "0.3.4"
+
+# Binary configuration
+[[bin]]
+name = "hyperlink"
+path = "src/main.rs"
