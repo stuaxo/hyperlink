@@ -1,6 +1,6 @@
-use hyperlink::{generate_file_path, get_displayed_text};
+use hyperlink::{generate_file_path};
 use rstest::rstest;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use temp_env;
 
 #[rstest(
@@ -11,11 +11,11 @@ use temp_env;
     case("/home/user/test.txt", false, "/home/user/test.txt")
 )]
 fn test_generate_file_path_from_absolute(filepath: &str, shortened: bool, expected: &str) {
-    let filepath = PathBuf::from(filepath);
+    let filepath = Path::new(filepath);
 
     // Since we are expanding tilde, HOME needs to be a known value
     temp_env::with_var("HOME", Some("/home/user"), || {
-        let generated_path = generate_file_path(&filepath, &None, shortened);
+        let generated_path = generate_file_path(&filepath, None, shortened);
 
         assert_eq!(generated_path, expected);
     });
@@ -23,7 +23,7 @@ fn test_generate_file_path_from_absolute(filepath: &str, shortened: bool, expect
 
 #[rstest(
     filepath,
-    relative_path,
+    relative_to,
     shortened,
     expected,
     case("/home/user/test.txt", "/home/user", false, "test.txt"),
@@ -37,11 +37,11 @@ fn test_generate_file_path_from_relative(
     expected: &str,
 ) {
     // Verify that relative_to works - in this case shortened should not affect the output
-    let filepath = PathBuf::from(filepath);
-    let relative_path = Some(PathBuf::from(relative_to));
+    let filepath = Path::new(filepath);
+    let relative_path = Some(Path::new(relative_to));
     // HOME needs to be a known value to test tilde expansion
     temp_env::with_var("HOME", Some("/home/user"), || {
-        let generated_path = generate_file_path(&filepath, &relative_path, shortened);
+        let generated_path = generate_file_path(filepath, relative_path, shortened);
 
         assert_eq!(generated_path, expected);
     });

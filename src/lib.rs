@@ -1,9 +1,9 @@
-use std::path::PathBuf;
+use std::path::Path;
 
 // Function to generate the file path used in the hyperlink.
 pub fn generate_file_path(
-    filepath: &PathBuf,
-    relative_to: &Option<PathBuf>,
+    filepath: &Path,
+    relative_to: Option<&Path>,
     shorten: bool,
 ) -> String {
     let mut text = filepath.to_string_lossy().to_string();

@@ -40,10 +40,10 @@ pub fn print_hyperlink(filepath: &Path, text: &str) {
 
 fn main() {
     let cli = Cli::parse();
-    let filepath = cli.file;
-
+    let filepath = cli.file.as_path();
     // Generate the file path used in the hyperlink.
-    let generated_path = generate_file_path(&filepath, &cli.relative_to, cli.shorten);
+    let generated_path = generate_file_path(filepath,
+                                        cli.relative_to.as_deref(), cli.shorten);
 
     // Generate the text to be displayed for the hyperlink.
     let text = get_displayed_text(&cli.text, &generated_path);
