@@ -1,7 +1,9 @@
-use hyperlink::{generate_file_path};
-use rstest::rstest;
 use std::path::Path;
+
+use rstest::rstest;
 use temp_env;
+
+use hyperlink::format_path_for_display;
 
 #[rstest(
     filepath,
@@ -15,7 +17,7 @@ fn test_generate_file_path_from_absolute(filepath: &str, shortened: bool, expect
 
     // Since we are expanding tilde, HOME needs to be a known value
     temp_env::with_var("HOME", Some("/home/user"), || {
-        let generated_path = generate_file_path(&filepath, None, shortened);
+        let generated_path = format_path_for_display(&filepath, None, shortened);
 
         assert_eq!(generated_path, expected);
     });
@@ -41,7 +43,7 @@ fn test_generate_file_path_from_relative(
     let relative_path = Some(Path::new(relative_to));
     // HOME needs to be a known value to test tilde expansion
     temp_env::with_var("HOME", Some("/home/user"), || {
-        let generated_path = generate_file_path(filepath, relative_path, shortened);
+        let generated_path = format_path_for_display(filepath, relative_path, shortened);
 
         assert_eq!(generated_path, expected);
     });

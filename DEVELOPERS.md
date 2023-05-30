@@ -34,7 +34,8 @@
    cargo install --path .
    ```
 
-   This will install the hyperlink binary to the $HOME/.cargo/bin directory. Ensure this directory is in your PATH to use the hyperlink command.
+   This will install the hyperlink binary to the $HOME/.cargo/bin directory. Ensure this directory is in your PATH to
+   use the hyperlink command.
 
 # Usage
 

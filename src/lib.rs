@@ -1,7 +1,7 @@
 use std::path::Path;
 
 // Function to generate the file path used in the hyperlink.
-pub fn generate_file_path(
+pub fn format_path_for_display(
     filepath: &Path,
     relative_to: Option<&Path>,
     shorten: bool,
@@ -22,9 +22,4 @@ pub fn generate_file_path(
     }
 
     text
-}
-
-pub fn get_displayed_text(custom_text: &Option<String>, filepath: &str) -> String {
-    // If a custom_text is supplied, return it otherwise return the supplied file path.
-    custom_text.clone().unwrap_or_else(|| filepath.to_string())
 }
