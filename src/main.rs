@@ -19,16 +19,12 @@ pub struct Cli {
     #[arg(short, long)]
     pub shorten: bool,
 
-    /// Always output osc8 hyperlinks even if stdout is not a terminal.
+    /// Output osc8 hyperlink even if stdout is not a terminal.
     #[arg(long)]
     pub osc8: bool,
 
     /// Absolute path of file to link to.
     pub file: PathBuf,
-}
-
-pub fn is_output_terminal() -> bool {
-    std::env::var("TERM").is_ok()
 }
 
 pub fn osc8_hyperlink(filepath: &Path, text: &str) -> String {
@@ -51,7 +47,7 @@ fn main() {
     };
     let text = cli.text.unwrap_or_else(|| generated_path.unwrap());
 
-    if cli.osc8 || is_output_terminal() {
+    if cli.osc8 || atty::is(atty::Stream::Stdout) {
         println!("{}", text);
     } else {
         println!("{}", osc8_hyperlink(&filepath, &text));
